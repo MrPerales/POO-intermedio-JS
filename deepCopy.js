@@ -1,11 +1,11 @@
-const obj1= {
-    a:'a',
-    b:'b',
-    c:{
-        d:'d',
-        e:'e',
-    },
-};
+// const obj1= {
+//     a:'a',
+//     b:'b',
+//     c:{
+//         d:'d',
+//         e:'e',
+//     },
+// };
 
 function isObject(subject){
     return typeof subject == "object"
@@ -63,3 +63,20 @@ function deepCopy(subject){
     }
     return copySubject;
 }
+
+//abstraction with Objects  and deepCopy
+
+const studentBase={
+    name:undefined,
+    email:undefined,
+    age:undefined,
+    approvedCourse:undefined,
+    learningPaths:undefined,
+    socialMedia:{
+        twitter:undefined,
+        facebook:undefined,
+        gitHub:undefined,
+    }
+}
+const carlos=deepCopy(studentBase); 
+
