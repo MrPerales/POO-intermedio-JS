@@ -82,35 +82,67 @@ function deepCopy(subject) {
 // const carlos=deepCopy(studentBase); 
 
 
-function requiredParam(param){
+function requiredParam(param) {
     throw new Error(param + 'missing parameter');
 
 }
 
 function createStudent({
-    name =requiredParam('name'),
+    name = requiredParam('name'),
     age,
-    email=requiredParam('email'),
+    email = requiredParam('email'),
     twitter,
     github,
     approvedCourse = [],
     learningPaths = [],
 }) {
-    return {
-        name,
+
+    const private = {
+        "_name": name,
+    }
+    const public = {
         age,
         email,
-        socialMedia:{
-        twitter,
-        github,
+        socialMedia: {
+            twitter,
+            github,
         },
         approvedCourse,
         learningPaths,
-    };
+
+        readName(){
+            //it's the same
+            //     private['_name];
+            return private["_name"];
+        },
+        changeName(newName) {
+            //it's the same
+            //private._name=newName;
+           private["_name"] = newName;
+
+        },
+
+    }
+    //blocking methods
+    //|
+    //v
+    //                    Object , Object property ,configuration 
+    Object.defineProperty(public,'readName',{
+        writable:false,
+        configurable:false,
+    });
+
+    Object.defineProperty(public,'changeName',{
+        writable:false,
+        configurable:false,
+    });
+    /////////////////////////
+
+    return public;
 }
-const carlos2= createStudent({
-    name:'carlos2',
-    age:27,
-    email:'jaziel@email.com',
-    twitter:'twitter'
+const carlos2 = createStudent({
+    name: 'carlos2',
+    age: 27,
+    email: 'jaziel@email.com',
+    twitter: 'twitter'
 });
