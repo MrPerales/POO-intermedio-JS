@@ -26,22 +26,17 @@ const carlos = {
 
 function deepFreeze(obj) {
 
-  if (typeof obj === 'object') {
-    
-    Object.freeze(obj);
-    
-    for (key in obj) {
-      
-   
-      deepFreeze(obj[key]);
 
-    }
-
-  } else {
-    return obj;
+  Object.keys(obj).map((item)=>{
+  console.log(item);
+  console.log(obj[item]);
+  if(typeof obj[item] === 'object' && !Object.isFrozen(obj[item])){
+    deepFreeze(obj[item]);
   }
+});
+return Object.freeze(obj);
+
 
 }
-deepFreeze(carlos);
 
-console.log(Object.isFrozen(carlos));
+
