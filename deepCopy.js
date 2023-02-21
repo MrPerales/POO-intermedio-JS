@@ -80,14 +80,17 @@ function deepCopy(subject) {
 // }
 
 // const carlos=deepCopy(studentBase); 
-function requiered(){
-    
+
+
+function requiredParam(param){
+    throw new Error(param + 'missing parameter');
+
 }
 
 function createStudent({
-    name,
+    name =requiredParam('name'),
     age,
-    email,
+    email=requiredParam('email'),
     twitter,
     github,
     approvedCourse = [],
@@ -105,8 +108,8 @@ function createStudent({
         learningPaths,
     };
 }
-const jaziel= createStudent({
-    name:'jaziel',
+const carlos2= createStudent({
+    name:'carlos2',
     age:27,
     email:'jaziel@email.com',
     twitter:'twitter'
