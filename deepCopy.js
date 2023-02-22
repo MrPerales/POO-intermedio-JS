@@ -95,7 +95,7 @@ function createStudent({
     github,
     approvedCourse = [],
     learningPaths = [],
-}) {
+}) { 
 
     const private = {
         "_name": name,
@@ -110,32 +110,44 @@ function createStudent({
         approvedCourse,
         learningPaths,
 
-        readName(){
-            //it's the same
-            //     private['_name];
-            return private["_name"];
+        ///////Getters and Setters 
+        get name() {
+            return private['_name'];
         },
-        changeName(newName) {
-            //it's the same
-            //private._name=newName;
-           private["_name"] = newName;
+        set name(newName) {
+            if (newName.length != 0) {
+                private['_name'] = newName;
+            } else {
+                console.warn('name can´t be empty ');
+            }
+        },
+        /////////////////////////
+        // readName(){
+        //     //it's the same
+        //     //     private['_name];
+        //     return private["_name"];
+        // },
+        // changeName(newName) {
+        //     //it's the same
+        //     //private._name=newName;
+        //    private["_name"] = newName;
 
-        },
+        // },
 
     }
     //blocking methods
     //|
     //v
     //                    Object , Object property ,configuration 
-    Object.defineProperty(public,'readName',{
-        writable:false,
-        configurable:false,
-    });
+    // Object.defineProperty(public,'readName',{
+    //     writable:false,
+    //     configurable:false,
+    // });
 
-    Object.defineProperty(public,'changeName',{
-        writable:false,
-        configurable:false,
-    });
+    // Object.defineProperty(public,'changeName',{
+    //     writable:false,
+    //     configurable:false,
+    // });
     /////////////////////////
 
     return public;
