@@ -86,29 +86,56 @@ function requiredParam(param) {
     throw new Error(param + 'missing parameter');
 
 }
+function createLearningPaths({
+    name = requiredParam('name'),
+    courses = [],
+}) {
+    const private = {
+        '_name': name,
+        '_courses': courses,
+
+    };
+    const public = {
+
+        get name() {
+            return private['_name'];
+        },
+        set name(newName) {
+            if (newName.length != 0) {
+                private['_name'] = newName;
+            } else {
+                console.warn('name can´t be empty ');
+            }
+        },
+        get courses() {
+            return private['_courses'];
+        },
+    }
+    return public;
+}
 
 function createStudent({
     name = requiredParam('name'),
-    age,
     email = requiredParam('email'),
+    age,
     twitter,
     github,
     approvedCourse = [],
-    learningPaths = [],
-}) { 
+    learningPaths=[],
+}={}) {
 
     const private = {
         "_name": name,
+        '_learningPaths': learningPaths,
     }
     const public = {
-        age,
         email,
+        age,
+        approvedCourse,
         socialMedia: {
             twitter,
             github,
         },
-        approvedCourse,
-        learningPaths,
 
         ///////Getters and Setters 
         get name() {
@@ -121,40 +148,33 @@ function createStudent({
                 console.warn('name can´t be empty ');
             }
         },
-        /////////////////////////
-        // readName(){
-        //     //it's the same
-        //     //     private['_name];
-        //     return private["_name"];
-        // },
-        // changeName(newName) {
-        //     //it's the same
-        //     //private._name=newName;
-        //    private["_name"] = newName;
+ 
+        get learningPaths() {
+            return private['_learningPaths'];
+        },
+        set learningPaths(newLearningPaths) {
+            if (!newLearningPaths.name) {
+                console.warn('the property name of Learning Path can´t be empty');
+                return;
+            }
+            if (!newLearningPaths.courses) {
+                console.warn('the Learning Paths don´t have Courses');
+                return;
+            }
 
-        // },
+            if (!isArray(newLearningPaths.courses)) {
+                console.warn('the learning Paths are not a list (courses )')
+                return;
+            }
+            private['_learningPaths'].push(newLearningPaths);
+        },
 
     }
-    //blocking methods
-    //|
-    //v
-    //                    Object , Object property ,configuration 
-    // Object.defineProperty(public,'readName',{
-    //     writable:false,
-    //     configurable:false,
-    // });
 
-    // Object.defineProperty(public,'changeName',{
-    //     writable:false,
-    //     configurable:false,
-    // });
-    /////////////////////////
 
     return public;
 }
-const carlos2 = createStudent({
-    name: 'carlos2',
-    age: 27,
+const carlos = createStudent({
+    name: 'carlos',
     email: 'jaziel@email.com',
-    twitter: 'twitter'
 });
