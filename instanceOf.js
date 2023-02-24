@@ -92,8 +92,6 @@ function Student({
         _learningPaths: [],
     }
 
-
-
     Object.defineProperty(this, 'learningPaths', {
         get() {
             return private._learningPaths;
