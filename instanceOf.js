@@ -86,63 +86,38 @@ function Student({
         twitter,
         github,
     }
-    //we validate if learningPaths is an ARRAY
-    if (isArray(learningPaths)) {
 
-        this.learningPaths = [];    // so we can used the method .push()
-
-        //with FOR IN we check if each element is an instance of Learning Paths
-        //FOR IN return keys or index of the array or object is being iterated 
-        //|
-        //v
-        for (learningPathIndex in learningPaths) {
-
-            console.log(learningPaths[learningPathIndex]);
-
-            console.log(learningPaths[learningPathIndex] instanceof LearningPaths)
-
-            if (learningPaths[learningPathIndex] instanceof LearningPaths) {
-                this.learningPaths.push(learningPaths[learningPathIndex]);
-
-            }// else {
-
-            //     console.warn('this learningPath is not instance of LEarningPaths');
-            //     return;
-            // }
-
-        }
-        /////////////////////////////////////////
-        
-        // FOR OF return directly the values
-        //|
-        //v
-        // for (learningPath of learningPaths) {
-
-        //     console.log(learningPath);
-
-        //     console.log(learningPath instanceof LearningPaths)
-
-        //     if (learningPath instanceof LearningPaths) {
-        //         this.learningPaths.push(learningPath);
-
-        //     }// else {
-
-        //     //     console.warn('this learningPath is not instance of LEarningPaths');
-        //     //     return;
-        //     // }
-
-        // }
-        /////////////////////////////////////////////
-
-
-    } else {
-        console.warn('learningPath is not array');
-        return;
+    const private = {
+        // so we can used the method .push()
+        _learningPaths: [],
     }
 
 
 
+    Object.defineProperty(this, 'learningPaths', {
+        get() {
+            return private._learningPaths;
+        },
+        set(newLP) {
+            if (newLP instanceof LearningPaths) {
+                private._learningPaths.push(newLP);
 
+            } else {
+                console.warn('LearningPath is not an LearningPaths instance ');
+            }
+
+        },
+    });
+
+    //with FOR IN we check if each element is an instance of Learning Paths
+    // FOR OF return directly the values
+    //|
+    //v
+    for (learningPath of learningPaths) {
+        this.learningPaths = learningPath;
+
+    }
+    /////////////////////////////////////////////
 }
 const schoolWeb = new LearningPaths({ name: 'School WebDev' });
 const schoolData = new LearningPaths({ name: 'School Data Science' })
